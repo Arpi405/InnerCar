@@ -1,3 +1,9 @@
+.page {
+  background: white;
+  min-height: 100vh;
+  padding: 30px;
+}
+
 .results-wrapper {
   max-width: 1000px;
   margin: 40px auto;
