@@ -1,49 +1,28 @@
-<div class="page">
+<div class="product-container">
+  <div *ngIf="products.length === 0" class="no-products">
+    <p>Nincsenek elérhető termékek, vagy töltés folyamatban...</p>
+  </div>
 
-  <app-nav-bar/>
-
-  <div class="filters">
-    <div>
-      <label>Kategória</label>
-      <select></select>
+  <div *ngFor="let product of products" class="product-card">
+    
+    <div class="image-container">
+      <img [src]="product.imageUrl || 'https://via.placeholder.com/300x200?text=Nincs+Kep'" 
+           [alt]="product.name">
     </div>
 
-    <div>
-      <label>Modell</label>
-      <select></select>
-    </div>
+    <div class="card-details">
+      <h3>{{ product.name }}</h3>
+      
+      <p class="description" [title]="product.description">
+        {{ product.description }}
+      </p>
 
-    <div>
-      <label>Vételár</label>
-      <div class="range">
-        <input placeholder="-tól                           Ft">
-        <input placeholder="-ig                            Ft">
+      <div class="price-row">
+        <span class="price">{{ product.price }} Ft</span>
+        <button (click)="onAddToCart(product)" class="add-btn">
+          Kosárba
+        </button>
       </div>
     </div>
-
-    <button class="btn orange search" (click)="onSearch()">Keresés</button>
   </div>
-
-  <h3>Kiemelt hirdetések:</h3>
-
-  <div class="product">
-    <img src="https://via.placeholder.com/120">
-    <div class="text">
-      <strong>6 sebességes váltógomb</strong>
-      <p>2018-as Kia Ceed és újabb modellekhez</p>
-      <p>Ár: 13 570 Ft</p>
-    </div>
-    <button class="btn orange" (click)="addToCart()">Kosárba</button>
-  </div>
-
-  <div class="product">
-    <img src="https://via.placeholder.com/120">
-    <div class="text">
-      <strong>Univerzális üléshuzat</strong>
-      <p>Bármelyik autóhoz, amelyben kagylóülések vannak</p>
-      <p>Ár: 33 920 Ft</p>
-    </div>
-    <button class="btn orange" (click)="addToCart()">Kosárba</button>
-  </div>
-
 </div>

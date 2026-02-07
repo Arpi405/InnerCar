@@ -1,42 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { NavBar } from "../nav-bar/nav-bar";
+import { CartService } from '../services/cart-service';
+import { NavBar } from '../nav-bar/nav-bar';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
   imports: [CommonModule, NavBar],
   templateUrl: './home-page.html',
-  styleUrl: './home-page.css',
+  styleUrls: ['./home-page.css']
 })
-export class HomePage {
-    category = '';
-    model = '';
-    minPrice = '';
-    maxPrice = '';
+export class HomePage implements OnInit {
+  products: any[] = [];
 
-private route= inject(Router);
-  cartService: any;
+  constructor(private http: HttpClient, private cartService: CartService) {}
 
-    onSearch() {
-      this.route.navigate(['/search'] , {
-        queryParams: {
-          category: this.category,
-          model: this.model,
-          minPrice: this.minPrice,
-          maxPrice: this.maxPrice,
-        }
-      });
-    }
+  ngOnInit() {
+    this.http.get<any[]>('http://localhost:8080/products').subscribe(data => {
+      this.products = data;
+    });
+  }
 
-    addToCart() {
-  this.cartService.addToCart({
-    id: 1,
-    name: '6 sebességes váltógomb',
-    price: 13570,
-    image: 'https://via.placeholder.com/100',
-    quantity: 1
-  });
-}
+  onAddToCart(product: any) {
+    this.cartService.addToCart(product);
+  }
 }

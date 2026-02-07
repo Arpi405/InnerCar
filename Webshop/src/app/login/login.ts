@@ -1,37 +1,34 @@
-import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from "@angular/router";
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, NgIf],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrls: ['./login.css']
 })
 export class Login {
+  loginData = { email: '', password: '' };
+  errorMessage = '';
 
-  loginForm: FormGroup;
-  router: any;
+  constructor(private http: HttpClient, private router: Router) {}
 
-  constructor(private fb: FormBuilder) {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+  login() {
+    this.http.post<any>('http://localhost:8080/login', this.loginData).subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        alert('Sikeres belépés!');
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.errorMessage = 'Hibás email vagy jelszó!';
+        console.error(err);
+      }
     });
   }
-
-  onSubmit() {
-    if (this.loginForm.invalid) return;
-    //backend
-    const { email, password } = this.loginForm.value;
-
-    console.log("Bejelentkezési adatok:", email, password);
-
-    this.router.navigate(['/home']);
-
-  }
 }
-

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartItem, CartService } from '../services/cart-service';
-import { RouterModule } from '@angular/router';
+import { CartService } from '../services/cart-service';
+import { Router, RouterModule } from '@angular/router';
 import { NavBar } from "../nav-bar/nav-bar";
 
 @Component({
@@ -12,21 +12,23 @@ import { NavBar } from "../nav-bar/nav-bar";
   styleUrl: './cart.css'
 })
 export class Cart {
-checkout() {
-throw new Error('Method not implemented.');
-}
-removeFromCart(_t7: CartItem) {
-throw new Error('Method not implemented.');
-}
-  items: CartItem[] = [];
+  items: any[] = [];
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService, private router: Router) {
     this.items = this.cartService.getItems();
   }
 
-  remove(id: number) {
-    this.cartService.removeFromCart(id);
+  removeFromCart(item: any) {
+    this.cartService.removeFromCart(item.id);
     this.items = this.cartService.getItems();
+  }
+
+  checkout() {
+    if (this.items.length === 0) {
+      alert('Üres a kosarad!');
+      return;
+    }
+    this.router.navigate(['/checkout']);
   }
 
   get total() {

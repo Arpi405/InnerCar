@@ -4,7 +4,7 @@ export interface CartItem {
   id: number;
   name: string;
   price: number;
-  image: string;
+  image?: string;
   quantity: number;
 }
 
@@ -14,26 +14,47 @@ export interface CartItem {
 export class CartService {
   private items: CartItem[] = [];
 
+  constructor() {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      this.items = JSON.parse(savedCart);
+    }
+  }
+
+  private saveCart() {
+    localStorage.setItem('cart', JSON.stringify(this.items));
+  }
+
   getItems() {
     return this.items;
   }
 
-  addToCart(item: CartItem) {
-    const existing = this.items.find(i => i.id === item.id);
+  addToCart(product: any) {
+    const existing = this.items.find(i => i.id === product.id);
 
     if (existing) {
       existing.quantity++;
     } else {
-      this.items.push({ ...item, quantity: 1 });
+      this.items.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.imageUrl || product.image || '',
+        quantity: 1
+      });
     }
+    this.saveCart();
+    alert('Termék a kosárba került!');
   }
 
   removeFromCart(id: number) {
     this.items = this.items.filter(i => i.id !== id);
+    this.saveCart();
   }
 
   clearCart() {
     this.items = [];
+    localStorage.removeItem('cart');
   }
 
   getTotal() {
