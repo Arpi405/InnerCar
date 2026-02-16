@@ -39,7 +39,7 @@ export class CartService {
         id: product.id,
         name: product.name,
         price: product.price,
-        image: product.imageUrl || product.image || '',
+        image: product.imageUrl || 'assets/image1.jpg', 
         quantity: 1
       });
     }

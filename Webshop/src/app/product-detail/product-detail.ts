@@ -1,33 +1,68 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavBar } from "../nav-bar/nav-bar";
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule, NavBar],
+  standalone: true,
+  imports: [CommonModule, NavBar, HttpClientModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
 })
-export class ProductDetail {
+export class ProductDetail implements OnInit {
 
-  product = {
-    images: [
-      'assets/image1.jpg',
-      'assets/image2.jpg',
-      'assets/image3.jpg'
-    ],
-    price: 2999,
-    description: 'Ez egy részletes leírás a termékről.'
+  product: any = {
+    name: 'Betöltés...',
+    price: 0,
+    description: '',
+    images: [] 
   };
-  images = this.product.images;
+  
+  images: string[] = [];
   currentImageIndex: number = 0;
 
+  constructor(
+    private route: ActivatedRoute, 
+    private http: HttpClient,
+    private cartService: CartService
+  ) {}
+
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      this.http.get<any>(`http://localhost:8080/api/products/${id}`).subscribe({
+        next: (data) => {
+          this.product = data;
+          
+          this.images = [
+            'assets/image1.jpg', 
+            'assets/default-car-part.jpg' 
+          ];
+          
+          if (data.imageUrl) {
+             this.images.unshift(data.imageUrl);
+          }
+        },
+        error: (err) => {
+          console.error('Nem sikerült betölteni a terméket', err);
+        }
+      });
+    }
+  }
+
   nextImage() {
-    this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+    if (this.images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+    }
   }
 
   prevImage() {
-    this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+    if (this.images.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+    }
   }
 
   addToFavorites() {
@@ -35,6 +70,7 @@ export class ProductDetail {
   }
 
   addToCart() {
-    console.log('Hozzáadva a kosárhoz');
+    this.cartService.addToCart(this.product);
   }
 }
+import { CartService } from '../services/cart-service';
