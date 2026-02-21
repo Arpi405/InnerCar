@@ -34,10 +34,12 @@ public class OrderController {
             throw new RuntimeException("Nincs bejelentkezve!");
         }
         String email = principal.getName();
-        
-        Customer customer = customerRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Felhasználó nem található"));
 
+        Customer customer = customerRepository.findByEmail(email);
+
+        if (customer == null) {
+            throw new RuntimeException("Felhasználó nem található");
+        }
         Orders newOrder = new Orders();
         newOrder.setCustomer(customer);
         newOrder.setOrderDate(LocalDateTime.now());
