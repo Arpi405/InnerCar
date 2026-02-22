@@ -22,6 +22,11 @@ public class Product {
     @Column(name = "discount_id")
     private Integer discountId;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
     public String getName() { return name; }

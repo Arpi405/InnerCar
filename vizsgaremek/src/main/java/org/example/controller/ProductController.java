@@ -25,7 +25,7 @@ public class ProductController {
     public Product getProductById(@PathVariable Integer id) {
         return productRepository.findById(id).orElse(null);
     }
-    
+
     @GetMapping("/products/search")
     public List<Product> searchProducts(@RequestParam String name) {
         return productRepository.findByNameContainingIgnoreCase(name);
