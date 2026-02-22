@@ -1,16 +1,19 @@
 <div class="result-wrapper">
+  <app-nav-bar/>
 
-    <app-nav-bar/>
+  <h2>Keresési találatok</h2>
 
-    <h2>Keresési találatok</h2>
+  <div *ngIf="result.length === 0" class="no-result">
+    Nincs keresési találat
+  </div>
 
-    <div *ngIf="result.length ===0" class="no-result">
-        Nincs keresési találat
+  <div class="result-card" *ngFor="let item of result">
+    <img [src]="item.imageUrl" [alt]="item.name">
+    <div class="text">
+      <p><strong>{{ item.name }}</strong></p>
+      <p>{{ item.description }}</p>
+      <p>Ár: {{ item.price }} Ft</p>
     </div>
-
-    <div class="result-card" class=" let item of result">
-        <div>
-            
-        </div>
-    </div>
+    <button class="btn orange">Kosárba</button>
+  </div>
 </div>

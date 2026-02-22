@@ -1,5 +1,5 @@
 .login-wrapper {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,105 +7,80 @@
   padding: 20px;
 }
 
-/* Központi kártya */
 .card {
-  background: #a8b2bf; /* világos szürke panel */
+  background: #a8b2bf;
   padding: 40px 50px;
   border-radius: 10px;
-  width: 500px;
+  width: 400px;
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  border: 3px solid #2980e9; /* kék szegély mint a képen */
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   color: #000;
   font-weight: 600;
-  font-size: 26px;
+  font-size: 22px;
 }
 
-/* Label-ek */
 label {
   display: block;
-  margin-top: 15px;
-  margin-bottom: 5px;
+  margin-top: 12px;
+  margin-bottom: 4px;
   color: #000;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-/* Input mezők */
 input {
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 8px;
+  padding: 10px 14px;
+  border-radius: 6px;
   border: none;
   background: #f1f1f1;
   color: #000;
-  font-size: 15px;
+  font-size: 14px;
   outline: none;
+  box-sizing: border-box;
 }
 
-/* Hibaüzenetek */
 .error {
-  font-size: 13px;
+  font-size: 12px;
   color: #d8000c;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
-/* Linkek sorban */
 .link-row {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 12px;
   margin-top: 8px;
-  color: #000;
 }
 
 .link-row a {
   color: #000;
   text-decoration: none;
-  font-weight: 500;
 }
 
 .link-row a:hover {
   text-decoration: underline;
 }
 
-/* Belépés gomb */
 button {
-  margin-top: 25px;
-  width: 200px;
+  margin-top: 20px;
+  width: 160px;
   display: block;
   margin-left: auto;
   margin-right: auto;
-  padding: 12px;
+  padding: 10px;
   border: none;
   border-radius: 8px;
-  background: #f57c00; /* narancs */
+  background: #ff8a00;
   color: white;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
 }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.switch-text {
-  font-size: 14px;
-  color: #555;
-}
-
-.switch-link {
-  color: #007bff;       /* Kék link */
-  text-decoration: underline;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.switch-link:hover {
-  color: #0056b3;       /* Sötétebb kék hover esetén */
+button:hover {
+  background: #e07a00;
 }

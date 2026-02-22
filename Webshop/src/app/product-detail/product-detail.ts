@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavBar } from "../nav-bar/nav-bar";
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CartService } from '../services/cart-service';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,7 +18,6 @@ export class ProductDetail implements OnInit {
     name: 'Betöltés...',
     price: 0,
     description: '',
-    images: [] 
   };
   
   images: string[] = [];
@@ -36,15 +36,7 @@ export class ProductDetail implements OnInit {
       this.http.get<any>(`http://localhost:8080/api/products/${id}`).subscribe({
         next: (data) => {
           this.product = data;
-          
-          this.images = [
-            'assets/image1.jpg', 
-            'assets/default-car-part.jpg' 
-          ];
-          
-          if (data.imageUrl) {
-             this.images.unshift(data.imageUrl);
-          }
+          this.images = data.imageUrl ? [data.imageUrl] : ['alcantara.jpg'];
         },
         error: (err) => {
           console.error('Nem sikerült betölteni a terméket', err);
@@ -73,4 +65,3 @@ export class ProductDetail implements OnInit {
     this.cartService.addToCart(this.product);
   }
 }
-import { CartService } from '../services/cart-service';

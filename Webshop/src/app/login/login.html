@@ -2,27 +2,21 @@
   <div class="card">
     <h2>Bejelentkezés</h2>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="login()">
+      <label>E-mail:</label>
+      <input type="email" [(ngModel)]="loginData.email" name="email">
 
-      <label>Email</label>
-      <input type="email" formControlName="email" placeholder="Email címed">
-      <div class="error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-        Érvénytelen email formátum
+      <label>Jelszó:</label>
+      <input type="password" [(ngModel)]="loginData.password" name="password">
+
+      <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+      <div class="link-row">
+        <a [routerLink]="['/register']">Nincs fiókod? Regisztráljon</a>
+        <a [routerLink]="['/forgot-password']">Elfelejtette a jelszavát?</a>
       </div>
 
-      <label>Jelszó</label>
-      <input type="password" formControlName="password" placeholder="Jelszó">
-      <div class="error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-        Minimum 8 karakter
-      </div>
-
-      <p class="switch-text">
-      <a routerLink="/register" class="switch-link">Nincsen fiókja? Regisztráljon</a>
-      <a routerLink="#">Elfelejtette a jelszavát?</a>
-    </p>>
-
-      <button type="submit">Belépés</button>
-
+        <button type="submit">Bejelentkezés</button>
     </form>
   </div>
 </div>

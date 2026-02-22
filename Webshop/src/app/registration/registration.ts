@@ -1,7 +1,7 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -13,9 +13,8 @@ import { RouterModule } from '@angular/router';
 export class Registration {
 
   registrationForm: any;
-  router: any;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.registrationForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -23,13 +22,12 @@ export class Registration {
     });
   }
 
-  onSubmit(){
-    if (this.registrationForm.valid){
+  onSubmit() {
+    if (this.registrationForm.valid) {
       console.log("Regisztráció sikeres!", this.registrationForm.value);
-    } else{
+      this.router.navigate(['/']);
+    } else {
       this.registrationForm.markAllAsTouched();
     }
-
-    this.router.navigate(['/home']);
   }
 }

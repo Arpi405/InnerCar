@@ -1,5 +1,59 @@
 .page {
-  background: white;
+  background: #1a2035;
   min-height: 100vh;
   padding: 30px;
+  font-family: 'Inria Sans', sans-serif;
+}
+
+.checkout-container {
+  max-width: 900px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.field label {
+  color: #000;
+  font-size: 15px;
+  width: 150px;
+  text-align: right;
+  color: #e0e0e0;
+}
+
+.field input,
+.field select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #f1f1f1;
+  font-size: 14px;
+  width: 200px;
+}
+
+.bottom-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.pay-btn {
+  background: #ff8a00;
+  color: #000;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.pay-btn:hover {
+  background: #e07a00;
 }

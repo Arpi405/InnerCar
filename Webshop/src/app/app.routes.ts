@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  // Kezdőlap frissítéskor is
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
   {
@@ -19,7 +18,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./checkout/checkout').then(m => m.Checkout),
   },
-
   {
     path: 'login',
     loadComponent: () =>
@@ -30,13 +28,33 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./registration/registration').then(m => m.Registration),
   },
-
   {
     path: 'search',
     loadComponent: () =>
       import('./search-result/search-result').then(m => m.SearchResult),
   },
+  {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./forgot-password/forgot-password').then(m => m.ForgotPassword),
+  },
+  {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./reset-password/reset-password').then(m => m.ResetPassword),
+  },
 
-  // 404 fallback
+  {
+  path: 'profile',
+  loadComponent: () =>
+    import('./profile/profile').then(m => m.Profile),
+  },
+
+  {
+  path: 'product/:id',
+  loadComponent: () =>
+    import('./product-detail/product-detail').then(m => m.ProductDetail),
+},
+
   { path: '**', redirectTo: 'home' },
 ];

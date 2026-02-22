@@ -1,19 +1,24 @@
 <app-nav-bar/>
 
-<div class="product-container">
-    <div class="image-slider">
-        <button class="nav prev" (click)="prevImage()">&#10094;</button>
-        <img [src]="images[currentImageIndex]" alt="Product Image">
-        <button class="nav next" (click)="nextImage()">&#10095;</button>
+<div class="page">
+  <div class="image-section">
+    <img [src]="images[currentImageIndex]" [alt]="product.name">
+    <div class="dots">
+      <span *ngFor="let img of images; let i = index" 
+            class="dot" 
+            [class.active]="i === currentImageIndex"
+            (click)="currentImageIndex = i">
+      </span>
     </div>
+  </div>
 
-    <div class="details">
-        <p>Ár: {{ product.price }}</p>
-        <p>Leírás: {{ product.description }}</p>
-    </div>
+  <div class="details">
+    <p><strong>ár:</strong> {{ product.price }} Ft</p>
+    <p><strong>részletes leírás:</strong> {{ product.description }}</p>
+  </div>
 
-    <div class="actions">
-        <button (click)="addToFavorites()">Kedvencekhez</button>
-        <button (click)="addToCart()">Kosárba</button>
-    </div>
+  <div class="actions">
+    <button class="btn orange" (click)="addToFavorites()">Kedvencekhez adás</button>
+    <button class="btn orange" (click)="addToCart()">Kosárba</button>
+  </div>
 </div>

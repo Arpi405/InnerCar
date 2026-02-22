@@ -1,21 +1,23 @@
 <app-nav-bar/>
 
-<h2>Kosár</h2>
+<div class="page">
+  <h2>Kosár:</h2>
 
-<div *ngIf="items.length === 0">
+  <div *ngIf="items.length === 0" class="empty">
     A kosár üres
-</div>
+  </div>
 
-<div class="cart-item" *ngFor="let item of items">
-    <img [src]="item.image" alt="{{ item.name }}" class="cart-item-image">
+  <div class="cart-item" *ngFor="let item of items">
+    <img [src]="item.image" [alt]="item.name">
     <div class="cart-item-details">
-        <h3>{{ item.name }}</h3>
-        <p>Ár: {{ item.price }} Ft</p>
-        <p>Mennyiség: {{ item.quantity }}</p>
-
-        <button (click)="removeFromCart(item)">Eltávolítás</button>
+      <p><strong>{{ item.name }}</strong></p>
+      <p>{{ item.description }}</p>
+      <p>Ár: {{ item.price }} Ft</p>
     </div>
+    <button class="remove-btn" (click)="removeFromCart(item)">Eltávolítás</button>
+  </div>
 
-<h3>Összesen: {{ total }} Ft</h3>
-
-<button (click)="checkout()" [disabled]="items.length === 0">Tovább a fizetéshez</button>
+  <div class="bottom-row">
+    <button class="continue-btn" (click)="checkout()" [disabled]="items.length === 0">Tovább a fizetéshez</button>
+  </div>
+</div>

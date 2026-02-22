@@ -39,7 +39,7 @@ export class CartService {
         id: product.id,
         name: product.name,
         price: product.price,
-        image: product.imageUrl || 'assets/image1.jpg', 
+        image: product.imageUrl || 'alcantara.jpg', 
         quantity: 1
       });
     }

@@ -1,33 +1,25 @@
 <div class="registration-wrapper">
   <div class="card">
-
     <h2>Regisztráció</h2>
 
     <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-
-      <label>E-mail:</label>
-      <input type="email" formControlName="email" placeholder="E-mail címed">
+      <label>Adja meg az E-mail címét:</label>
+      <input type="email" formControlName="email" placeholder="">
       <div class="error" *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.invalid">
         Érvénytelen email formátum
       </div>
 
-      <label>Jelszó:</label>
-      <input type="password" formControlName="password" placeholder="jelszó">
+      <label>Adjon meg egy jelszavat:</label>
+      <input type="password" formControlName="password" placeholder="">
       <div class="error" *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.invalid">
-        Minimum 8 karakter
+        Minimum 6 karakter
       </div>
 
-      <label>Jelszó megerősítése:</label>
-      <input type="password" formControlName="confirmPassword" placeholder="Írja be mégegyszer a jelszót">
-      <div class="error"
-        *ngIf="registrationForm.get('confirmPassword')?.touched && registrationForm.get('confirmPassword')?.invalid">
+      <label>Adja meg mégegyszer a jelszavát:</label>
+      <input type="password" formControlName="confirmPassword" placeholder="">
+      <div class="error" *ngIf="registrationForm.get('confirmPassword')?.touched && registrationForm.get('confirmPassword')?.invalid">
         A két jelszó nem egyezik
       </div>
-
-      <p class="switch-text">
-        Már van fiókod?
-        <a routerLink="/login" class="switch-link">Jelentkezzen be</a>
-      </p>
 
       <button type="submit">Regisztráció</button>
     </form>
