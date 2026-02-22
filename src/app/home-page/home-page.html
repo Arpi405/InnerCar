@@ -1,0 +1,46 @@
+<app-nav-bar/>
+
+<div class="page">
+  <div class="filters">
+    <div>
+      <label>Kategória</label>
+      <select [(ngModel)]="selectedCategory">
+        <option [value]="null">↓</option>
+        <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+      </select>
+    </div>
+    <div>
+      <label>Modell</label>
+      <select [(ngModel)]="selectedModel">
+        <option [value]="null">↓</option>
+        <option *ngFor="let m of models" [value]="m.id">{{ m.name }}</option>
+      </select>
+    </div>
+    <div>
+      <label>Vételár</label>
+      <div class="range">
+        <input type="number" placeholder="-tól" [(ngModel)]="minPrice">
+        <input type="number" placeholder="-ig" [(ngModel)]="maxPrice">
+      </div>
+    </div>
+    <button class="btn orange search" (click)="search()">Keresés</button>
+  </div>
+
+  <h3>Kiemelt hirdetések:</h3>
+
+  <div class="product-container">
+    <div *ngIf="products.length === 0" class="no-products">
+      <p>Nincsenek elérhető termékek...</p>
+    </div>
+
+    <div *ngFor="let product of products" class="product">
+      <img [src]="product.imageUrl" [alt]="product.name">
+      <div class="text">
+        <p><strong>{{ product.name }}</strong></p>
+        <p>{{ product.description }}</p>
+        <p>Ár: {{ product.price }} Ft</p>
+      </div>
+      <button (click)="onAddToCart(product)" class="btn orange">Kosárba</button>
+    </div>
+  </div>
+</div>

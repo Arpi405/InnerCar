@@ -1,0 +1,24 @@
+<app-nav-bar/>
+
+<div class="page">
+  <div class="checkout-container">
+    <div class="field">
+      <label>Az Összeg:</label>
+      <input type="text" [value]="total + ' Ft'" readonly>
+    </div>
+
+    <div class="field">
+      <label>Fizetési eszközök:</label>
+      <select [(ngModel)]="selectedPayment">
+        <option value="">↓</option>
+        <option value="card">Bankkártya</option>
+        <option value="cash">Készpénz</option>
+        <option value="transfer">Átutalás</option>
+      </select>
+    </div>
+
+    <div class="bottom-row">
+      <button class="pay-btn" (click)="pay()">Fizetés</button>
+    </div>
+  </div>
+</div>

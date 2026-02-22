@@ -1,0 +1,27 @@
+<div class="registration-wrapper">
+  <div class="card">
+    <h2>Regisztráció</h2>
+
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <label>Adja meg az E-mail címét:</label>
+      <input type="email" formControlName="email" placeholder="">
+      <div class="error" *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.invalid">
+        Érvénytelen email formátum
+      </div>
+
+      <label>Adjon meg egy jelszavat:</label>
+      <input type="password" formControlName="password" placeholder="">
+      <div class="error" *ngIf="registrationForm.get('password')?.touched && registrationForm.get('password')?.invalid">
+        Minimum 6 karakter
+      </div>
+
+      <label>Adja meg mégegyszer a jelszavát:</label>
+      <input type="password" formControlName="confirmPassword" placeholder="">
+      <div class="error" *ngIf="registrationForm.get('confirmPassword')?.touched && registrationForm.get('confirmPassword')?.invalid">
+        A két jelszó nem egyezik
+      </div>
+
+      <button type="submit">Regisztráció</button>
+    </form>
+  </div>
+</div>

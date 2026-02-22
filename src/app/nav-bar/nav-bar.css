@@ -1,0 +1,39 @@
+.navbar {
+  background: #1f2a35;
+  padding: 12px 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: #ddd;
+  border-radius: 50%;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.orange {
+  background: #ff8a00;
+  color: #000;
+}
+
+.icon {
+  font-size: 20px;
+  cursor: pointer;
+}

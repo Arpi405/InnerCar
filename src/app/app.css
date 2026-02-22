@@ -1,0 +1,12 @@
+.btn {
+  border: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.orange {
+  background: #ff8a00;
+  color: #000;
+  font-weight: 500;
+}
