@@ -2,10 +2,10 @@
 -- version 5.1.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jan 12, 2026 at 10:52 AM
--- Server version: 5.7.24
--- PHP Version: 8.1.0
+-- Gép: localhost:3306
+-- Létrehozás ideje: 2026. Feb 22. 21:48
+-- Kiszolgáló verziója: 5.7.24
+-- PHP verzió: 8.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,12 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `vizsgaremek`
+-- Adatbázis: `vizsgaremek`
 --
 
 DELIMITER $$
 --
--- Procedures
+-- Eljárások
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AddCartItem` (IN `p_product_id` INT, IN `p_quantity` INT)   BEGIN
     INSERT INTO cart (product_id, quantity, created_at, modified_at)
@@ -109,7 +109,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cart`
+-- Tábla szerkezet ehhez a táblához `cart`
 --
 
 CREATE TABLE `cart` (
@@ -121,7 +121,7 @@ CREATE TABLE `cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `cart`
+-- A tábla adatainak kiíratása `cart`
 --
 
 INSERT INTO `cart` (`id`, `product_id`, `quantity`, `created_at`, `modified_at`) VALUES
@@ -140,7 +140,7 @@ INSERT INTO `cart` (`id`, `product_id`, `quantity`, `created_at`, `modified_at`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Tábla szerkezet ehhez a táblához `category`
 --
 
 CREATE TABLE `category` (
@@ -153,7 +153,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `category`
+-- A tábla adatainak kiíratása `category`
 --
 
 INSERT INTO `category` (`id`, `name`, `desc`, `created_at`, `modified_at`, `deleted_at`) VALUES
@@ -172,7 +172,7 @@ INSERT INTO `category` (`id`, `name`, `desc`, `created_at`, `modified_at`, `dele
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Tábla szerkezet ehhez a táblához `customer`
 --
 
 CREATE TABLE `customer` (
@@ -183,7 +183,7 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `customer`
+-- A tábla adatainak kiíratása `customer`
 --
 
 INSERT INTO `customer` (`id`, `email`, `password`, `phone`) VALUES
@@ -201,7 +201,7 @@ INSERT INTO `customer` (`id`, `email`, `password`, `phone`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `discount`
+-- Tábla szerkezet ehhez a táblához `discount`
 --
 
 CREATE TABLE `discount` (
@@ -216,7 +216,7 @@ CREATE TABLE `discount` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `discount`
+-- A tábla adatainak kiíratása `discount`
 --
 
 INSERT INTO `discount` (`id`, `name`, `desc`, `discount_percent`, `active`, `created_at`, `modified_at`, `deleted_at`) VALUES
@@ -234,7 +234,28 @@ INSERT INTO `discount` (`id`, `name`, `desc`, `discount_percent`, `active`, `cre
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order`
+-- Tábla szerkezet ehhez a táblához `model`
+--
+
+CREATE TABLE `model` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `model`
+--
+
+INSERT INTO `model` (`id`, `name`) VALUES
+(1, 'Kia Ceed'),
+(2, 'Audi A6'),
+(3, 'BMW E46'),
+(4, 'Toyota Corolla');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `order`
 --
 
 CREATE TABLE `order` (
@@ -247,7 +268,7 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `order`
+-- A tábla adatainak kiíratása `order`
 --
 
 INSERT INTO `order` (`id`, `customer_id`, `total`, `payment_id`, `created_at`, `modified_at`) VALUES
@@ -265,7 +286,34 @@ INSERT INTO `order` (`id`, `customer_id`, `total`, `payment_id`, `created_at`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `order_items`
+-- Tábla szerkezet ehhez a táblához `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `order_date` datetime(6) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `total_price` double DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `order_item`
+--
+
+CREATE TABLE `order_item` (
+  `id` int(11) NOT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `orders_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `order_items`
 --
 
 CREATE TABLE `order_items` (
@@ -278,7 +326,7 @@ CREATE TABLE `order_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `order_items`
+-- A tábla adatainak kiíratása `order_items`
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `created_at`, `modified_at`) VALUES
@@ -296,7 +344,7 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`, `created_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payment`
+-- Tábla szerkezet ehhez a táblához `payment`
 --
 
 CREATE TABLE `payment` (
@@ -310,7 +358,7 @@ CREATE TABLE `payment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `payment`
+-- A tábla adatainak kiíratása `payment`
 --
 
 INSERT INTO `payment` (`id`, `order_id`, `amount`, `provider`, `status`, `created_at`, `modified_at`) VALUES
@@ -328,7 +376,7 @@ INSERT INTO `payment` (`id`, `order_id`, `amount`, `provider`, `status`, `create
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Tábla szerkezet ehhez a táblához `product`
 --
 
 CREATE TABLE `product` (
@@ -337,32 +385,34 @@ CREATE TABLE `product` (
   `desc` text NOT NULL,
   `category_id` int(11) NOT NULL,
   `discount_id` int(11) NOT NULL,
-  `price` decimal(10,0) NOT NULL,
+  `price` double DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `deleted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `image_url` varchar(500) DEFAULT NULL,
+  `model_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `product`
+-- A tábla adatainak kiíratása `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `desc`, `category_id`, `discount_id`, `price`, `created_at`, `modified_at`, `deleted_at`) VALUES
-(1, 'Alcantara üléshuzat', 'Prémium Alcantara ülésvédő huzat.', 1, 1, '60000', '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51'),
-(2, 'Egyszerű csomagtér választó háló', 'Minden járműhöz lehet használni.', 1, 2, '1990', '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51'),
-(3, 'Multimédiás fejegység', 'Érintőkijelzős fejegység Bluetooth-tal, Android Auto-val és Apple CarPlay-yel.', 2, 3, '45990', '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51'),
-(4, 'Sport váltógomb (5 Fokozatú)', 'Bármilyen autóba illik aminek 5 fokozatú váltóje van.', 5, 4, '3990', '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51'),
-(5, 'Areon cseresznye légfrissítő', 'Cseresznye illatú Areon legfrissítő', 3, 1, '1500', '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51'),
-(6, 'Alumínium pedálszett', 'Ez a szett tartalmaz egy gázpedált egy fékpedált és egy kuplung pedál is.', 4, 5, '12990', '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51'),
-(7, 'Világos műszerfal borítás', 'Ez egy műszerfal borítás amit személyre szabható és könnyen tisztítható', 6, 2, '8990', '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51'),
-(8, 'Audi A6 C7 Első ajtó kárpit szett', 'Ez egy kárpit szett ami csak is kizárólag Audi A6 C7 autó belsejére jó', 7, 0, '29990', '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51'),
-(9, 'Fém rácsos csomagtér választó', 'Csomagtér választó ami megvédi a csomagok előtt ülő utasok biztonságát. Ez a csomagtér választó kizárólag csak kombiban jó.', 8, 1, '6990', '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51'),
-(10, 'Multifunkcionális kormány borítás', 'Ez minden kormányhoz jó', 10, 0, '1900', '2026-01-08 13:04:51', '2026-01-12 10:39:51', '2026-01-08 13:04:51');
+INSERT INTO `product` (`id`, `name`, `desc`, `category_id`, `discount_id`, `price`, `created_at`, `modified_at`, `deleted_at`, `image_url`, `model_id`) VALUES
+(1, 'Alcantara üléshuzat', 'Prémium Alcantara ülésvédő huzat.', 1, 1, 60000, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'alcantara.jpg', NULL),
+(2, 'Egyszerű csomagtér választó háló', 'Minden járműhöz lehet használni.', 1, 2, 1990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'csomagter-halo.jpg', NULL),
+(3, 'Multimédiás fejegység', 'Érintőkijelzős fejegység Bluetooth-tal, Android Auto-val és Apple CarPlay-yel.', 2, 3, 45990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'multimedias-fejegyseg.jpg', NULL),
+(4, 'Sport váltógomb (5 Fokozatú)', 'Bármilyen autóba illik aminek 5 fokozatú váltóje van.', 5, 4, 3990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'sport-valtogomb.jpg', NULL),
+(5, 'Areon cseresznye légfrissítő', 'Cseresznye illatú Areon legfrissítő', 3, 1, 1500, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'areon-legfrissito.jpg', NULL),
+(6, 'Alumínium pedálszett', 'Ez a szett tartalmaz egy gázpedált egy fékpedált és egy kuplung pedál is.', 4, 5, 12990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'aluminum-pedalszett.jpg', NULL),
+(7, 'Világos műszerfal borítás', 'Ez egy műszerfal borítás amit személyre szabható és könnyen tisztítható', 6, 2, 8990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'muszerfal-boritas.jpg', NULL),
+(8, 'Audi A6 C7 Első ajtó kárpit szett', 'Ez egy kárpit szett ami csak is kizárólag Audi A6 C7 autó belsejére jó', 7, 0, 29990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'audi-a6-karpit.jpg', NULL),
+(9, 'Fém rácsos csomagtér választó', 'Csomagtér választó ami megvédi a csomagok előtt ülő utasok biztonságát. Ez a csomagtér választó kizárólag csak kombiban jó.', 8, 1, 6990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'fem-racsos-csomagter.jpg', NULL),
+(10, 'Multifunkcionális kormány borítás', 'Ez minden kormányhoz jó', 10, 0, 1900, '2026-01-08 13:04:51', '2026-01-12 10:39:51', '2026-01-08 13:04:51', 'kormany-boritas.jpg', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shipment`
+-- Tábla szerkezet ehhez a táblához `shipment`
 --
 
 CREATE TABLE `shipment` (
@@ -375,7 +425,7 @@ CREATE TABLE `shipment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `shipment`
+-- A tábla adatainak kiíratása `shipment`
 --
 
 INSERT INTO `shipment` (`id`, `order_id`, `status`, `tracking_code`, `shipped_at`, `delivered_at`) VALUES
@@ -391,121 +441,177 @@ INSERT INTO `shipment` (`id`, `order_id`, `status`, `tracking_code`, `shipped_at
 (10, 10, 'del', 'TRK0010', '2026-01-02 13:06:32', '2026-01-05 13:06:32');
 
 --
--- Indexes for dumped tables
+-- Indexek a kiírt táblákhoz
 --
 
 --
--- Indexes for table `cart`
+-- A tábla indexei `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `category`
+-- A tábla indexei `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `customer`
+-- A tábla indexei `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `discount`
+-- A tábla indexei `discount`
 --
 ALTER TABLE `discount`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `order`
+-- A tábla indexei `model`
+--
+ALTER TABLE `model`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- A tábla indexei `order`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `order_items`
+-- A tábla indexei `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK624gtjin3po807j3vix093tlf` (`customer_id`);
+
+--
+-- A tábla indexei `order_item`
+--
+ALTER TABLE `order_item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKea29bb770t1s99pp2ngvhgwnt` (`orders_id`),
+  ADD KEY `FK551losx9j75ss5d6bfsqvijna` (`product_id`);
+
+--
+-- A tábla indexei `order_items`
 --
 ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `payment`
+-- A tábla indexei `payment`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `product`
+-- A tábla indexei `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `shipment`
+-- A tábla indexei `shipment`
 --
 ALTER TABLE `shipment`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- A kiírt táblák AUTO_INCREMENT értéke
 --
 
 --
--- AUTO_INCREMENT for table `cart`
+-- AUTO_INCREMENT a táblához `cart`
 --
 ALTER TABLE `cart`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT a táblához `category`
 --
 ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `customer`
+-- AUTO_INCREMENT a táblához `customer`
 --
 ALTER TABLE `customer`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `discount`
+-- AUTO_INCREMENT a táblához `discount`
 --
 ALTER TABLE `discount`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `order`
+-- AUTO_INCREMENT a táblához `model`
+--
+ALTER TABLE `model`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT a táblához `order`
 --
 ALTER TABLE `order`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `order_items`
+-- AUTO_INCREMENT a táblához `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `order_item`
+--
+ALTER TABLE `order_item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `order_items`
 --
 ALTER TABLE `order_items`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `payment`
+-- AUTO_INCREMENT a táblához `payment`
 --
 ALTER TABLE `payment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `product`
+-- AUTO_INCREMENT a táblához `product`
 --
 ALTER TABLE `product`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `shipment`
+-- AUTO_INCREMENT a táblához `shipment`
 --
 ALTER TABLE `shipment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Megkötések a kiírt táblákhoz
+--
+
+--
+-- Megkötések a táblához `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `FK624gtjin3po807j3vix093tlf` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`);
+
+--
+-- Megkötések a táblához `order_item`
+--
+ALTER TABLE `order_item`
+  ADD CONSTRAINT `FK551losx9j75ss5d6bfsqvijna` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+  ADD CONSTRAINT `FKea29bb770t1s99pp2ngvhgwnt` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
