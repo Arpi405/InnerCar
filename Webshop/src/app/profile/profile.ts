@@ -19,4 +19,9 @@ export class Profile implements OnInit {
       this.favorites = JSON.parse(saved);
     }
   }
+
+  removeFromFavorites(item: any) {
+    this.favorites = this.favorites.filter(f => f.id !== item.id);
+    localStorage.setItem('favorites', JSON.stringify(this.favorites));
+  }
 }

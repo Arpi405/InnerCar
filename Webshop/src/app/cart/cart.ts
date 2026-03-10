@@ -23,6 +23,20 @@ export class Cart {
     this.items = this.cartService.getItems();
   }
 
+  increaseQuantity(item: any) {
+    item.quantity++;
+    this.cartService.saveCart();
+  }
+
+  decreaseQuantity(item: any) {
+    if (item.quantity > 1) {
+      item.quantity--;
+      this.cartService.saveCart();
+    } else {
+      this.removeFromCart(item);
+    }
+  }
+
   checkout() {
     if (this.items.length === 0) {
       alert('Üres a kosarad!');

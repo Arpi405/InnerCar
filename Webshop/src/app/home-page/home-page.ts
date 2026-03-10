@@ -18,8 +18,8 @@ export class HomePage implements OnInit {
   categories: any[] = [];
   models: any[] = [];
 
-  selectedCategory: number | null = null;
-  selectedModel: number | null = null;
+  selectedCategory: string = '';
+  selectedModel: string = '';
   minPrice: number | null = null;
   maxPrice: number | null = null;
 
@@ -32,7 +32,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.http.get<any[]>('http://localhost:8080/api/products').subscribe({
       next: (data) => {
-        this.products = data;
+        this.products = data.map(p => ({ ...p, quantity: 1 }));
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Hiba:', err)
@@ -56,22 +56,39 @@ export class HomePage implements OnInit {
   }
 
   search() {
-    let url = 'http://localhost:8080/api/products?';
-    if (this.selectedCategory) url += `categoryId=${this.selectedCategory}&`;
-    if (this.selectedModel) url += `modelId=${this.selectedModel}&`;
-    if (this.minPrice) url += `minPrice=${this.minPrice}&`;
-    if (this.maxPrice) url += `maxPrice=${this.maxPrice}&`;
+    const params: any = {};
+    if (this.selectedCategory) params['categoryId'] = this.selectedCategory;
+    if (this.selectedModel) params['modelId'] = this.selectedModel;
+    if (this.minPrice) params['minPrice'] = this.minPrice;
+    if (this.maxPrice) params['maxPrice'] = this.maxPrice;
 
-    this.http.get<any[]>(url).subscribe({
+    this.http.get<any[]>('http://localhost:8080/api/products/filter', { params }).subscribe({
       next: (data) => {
-        this.products = data;
+        this.products = data.map(p => ({ ...p, quantity: 1 }));
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Hiba a kereséskor:', err)
+      error: (err) => console.error('Hiba a szűréskor:', err)
     });
   }
 
-  onAddToCart(product: any) {
-    this.cartService.addToCart(product);
+  increaseQuantity(product: any, event: Event) {
+    event.stopPropagation();
+    product.quantity++;
+  }
+
+  decreaseQuantity(product: any, event: Event) {
+    event.stopPropagation();
+    if (product.quantity > 1) {
+      product.quantity--;
+    }
+  }
+
+  onAddToCart(product: any, event: Event) {
+    event.stopPropagation();
+    for (let i = 0; i < product.quantity; i++) {
+      this.cartService.addToCartSilent(product);
+    }
+    alert(`${product.quantity} db ${product.name} a kosárba került!`);
+    product.quantity = 1;
   }
 }

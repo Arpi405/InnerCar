@@ -9,27 +9,36 @@
   display: flex;
   gap: 30px;
   max-width: 900px;
-  margin: 30px auto;
+  margin: 20px auto;
+  align-items: flex-start;
 }
 
-.avatar-section {
+.avatar-box {
+  width: 180px;
+  height: 180px;
+  background: #b6c0cc;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-shrink: 0;
 }
 
-.avatar {
-  width: 120px;
-  height: 120px;
-  background: #b6c0cc;
+.avatar-circle {
+  width: 100px;
+  height: 100px;
+  background: #e5ecf3;
   border-radius: 50%;
-}
-
-.favorites-section {
-  flex-grow: 1;
 }
 
 .favorites-section h3 {
   margin-bottom: 15px;
   color: #000;
+  font-size: 18px;
+}
+
+.no-favorites {
+  color: #666;
 }
 
 .favorite-item {
@@ -52,4 +61,19 @@
 .text p {
   margin: 2px 0;
   color: #000;
+}
+
+.remove-btn {
+  margin-left: auto;
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.remove-btn:hover {
+  background: #c62828;
 }

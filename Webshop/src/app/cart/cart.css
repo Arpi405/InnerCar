@@ -35,6 +35,24 @@ h2 {
   color: #000;
 }
 
+.quantity-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.qty-btn {
+  background: #ff8a00;
+  border: none;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .remove-btn {
   background: #e53935;
   color: white;
@@ -53,7 +71,14 @@ h2 {
   max-width: 900px;
   margin: 20px auto;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .continue-btn {
@@ -95,5 +120,10 @@ h2 {
 
   .remove-btn {
     width: 100%;
+  }
+
+  .bottom-row {
+    flex-direction: column;
+    gap: 15px;
   }
 }

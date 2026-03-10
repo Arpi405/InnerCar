@@ -21,15 +21,16 @@ export class Login {
     this.http.post<any>('http://localhost:8080/login', this.loginData).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
+        localStorage.setItem('email', response.email);
+        localStorage.setItem('role', response.role);
+        localStorage.setItem('name', response.name);
         alert('Sikeres belépés!');
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
-        this.errorMessage = 'Hibás email vagy jelszó!';
+        this.errorMessage = err.error || 'Hiba történt a bejelentkezés során!';
         console.error(err);
       }
     });
   }
 }
-

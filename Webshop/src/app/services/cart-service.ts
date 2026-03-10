@@ -21,7 +21,7 @@ export class CartService {
     }
   }
 
-  private saveCart() {
+  saveCart() {
     localStorage.setItem('cart', JSON.stringify(this.items));
   }
 
@@ -31,7 +31,6 @@ export class CartService {
 
   addToCart(product: any) {
     const existing = this.items.find(i => i.id === product.id);
-
     if (existing) {
       existing.quantity++;
     } else {
@@ -39,12 +38,28 @@ export class CartService {
         id: product.id,
         name: product.name,
         price: product.price,
-        image: product.imageUrl || 'alcantara.jpg', 
+        image: product.imageUrl || 'alcantara.jpg',
         quantity: 1
       });
     }
     this.saveCart();
     alert('Termék a kosárba került!');
+  }
+
+  addToCartSilent(product: any) {
+    const existing = this.items.find(i => i.id === product.id);
+    if (existing) {
+      existing.quantity++;
+    } else {
+      this.items.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.imageUrl || 'alcantara.jpg',
+        quantity: 1
+      });
+    }
+    this.saveCart();
   }
 
   removeFromCart(id: number) {

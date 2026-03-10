@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NavBar } from "../nav-bar/nav-bar";
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -26,7 +26,8 @@ export class ProductDetail implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private http: HttpClient,
-    private cartService: CartService
+    private cartService: CartService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -37,6 +38,7 @@ export class ProductDetail implements OnInit {
         next: (data) => {
           this.product = data;
           this.images = data.imageUrl ? [data.imageUrl] : ['alcantara.jpg'];
+          this.cdr.detectChanges();
         },
         error: (err) => {
           console.error('Nem sikerült betölteni a terméket', err);
@@ -58,7 +60,17 @@ export class ProductDetail implements OnInit {
   }
 
   addToFavorites() {
-    console.log('Hozzáadva a kedvencekhez');
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const already = favorites.find((f: any) => f.id === this.product.id);
+    
+    if (already) {
+      alert('Ez a termék már a kedvenceid között van!');
+      return;
+    }
+    
+    favorites.push(this.product);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    alert('Kedvencekhez adva!');
   }
 
   addToCart() {
