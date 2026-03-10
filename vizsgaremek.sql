@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: localhost:3306
--- Létrehozás ideje: 2026. Feb 22. 21:48
+-- Létrehozás ideje: 2026. Már 10. 20:09
 -- Kiszolgáló verziója: 5.7.24
 -- PHP verzió: 8.3.1
 
@@ -165,7 +165,7 @@ INSERT INTO `category` (`id`, `name`, `desc`, `created_at`, `modified_at`, `dele
 (6, 'Középkonzol', '', '2026-01-08 12:55:04', '2026-01-08 12:55:04', '2026-01-08 12:55:04'),
 (7, 'Tetőkárpit', '', '2026-01-08 12:55:04', '2026-01-08 12:55:04', '2026-01-08 12:55:04'),
 (8, 'Váltógomb', '', '2026-01-08 12:55:04', '2026-01-08 12:55:04', '2026-01-08 12:55:04'),
-(9, 'Multimédiás eszököz', '', '2026-01-08 12:55:04', '2026-01-08 12:55:04', '2026-01-08 12:55:04'),
+(9, 'Multimédiás eszköz', '', '2026-01-08 12:55:04', '2026-01-08 12:55:04', '2026-01-08 12:55:04'),
 (10, 'Légfrissítő', '', '2026-01-08 12:55:04', '2026-01-08 12:55:04', '2026-01-08 12:55:04'),
 (11, 'Csomagtér választó', '', '2026-01-12 10:34:59', '2026-01-12 10:35:42', '2026-01-12 10:35:42');
 
@@ -179,24 +179,32 @@ CREATE TABLE `customer` (
   `id` int(10) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(14) NOT NULL,
-  `phone` int(11) NOT NULL
+  `phone` varchar(255) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `role` varchar(20) DEFAULT 'USER'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `customer`
 --
 
-INSERT INTO `customer` (`id`, `email`, `password`, `phone`) VALUES
-(1, 'anna.kiss@test.hu', 'password123', 2147483647),
-(2, 'bela.nagy@test.hu', 'password123', 2147483647),
-(3, 'csilla.toth@test.hu', 'password123', 2147483647),
-(4, 'david.horvath@test.hu', 'password123', 2147483647),
-(5, 'eva.szabo@test.hu', 'password123', 2147483647),
-(6, 'ferenc.varga@test.hu', 'password123', 2147483647),
-(7, 'gina.kovacs@test.hu', 'password123', 2147483647),
-(8, 'istvan.balogh@test.hu', 'password123', 2147483647),
-(9, 'julia.fekete@test.hu', 'password123', 2147483647),
-(10, 'mark.papp@test.hu', 'password123', 2147483647);
+INSERT INTO `customer` (`id`, `email`, `password`, `phone`, `name`, `address`, `role`) VALUES
+(1, 'anna.kiss@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(2, 'bela.nagy@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(3, 'csilla.toth@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(4, 'david.horvath@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(5, 'eva.szabo@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(6, 'ferenc.varga@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(7, 'gina.kovacs@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(8, 'istvan.balogh@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(9, 'julia.fekete@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(10, 'mark.papp@test.hu', 'password123', '2147483647', NULL, NULL, 'USER'),
+(11, 'kisbela@gmail.com', '6a0e7bfb', '06301234567', 'Kis Béla', 'Budapest Andrássy út 67', 'USER'),
+(12, 'sarpadbalazs@gmail.com', 'jelszo', NULL, NULL, NULL, NULL),
+(13, 'nagyimre@gmail.com', '54863874', '06305556678', 'Nagy Imre', 'Kaposvár, Temesvár utca 10', NULL),
+(14, 'nagypeter@gmail.com', 'jelszo', NULL, NULL, NULL, NULL),
+(15, 'hatizsak@gmail.com', 'jelszo123', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -297,6 +305,14 @@ CREATE TABLE `orders` (
   `customer_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- A tábla adatainak kiíratása `orders`
+--
+
+INSERT INTO `orders` (`id`, `order_date`, `status`, `total_price`, `customer_id`) VALUES
+(1, '2026-02-28 21:51:48.613662', 'Feldolgozás alatt', 60000, 11),
+(2, '2026-03-03 22:18:25.309461', 'Feldolgozás alatt', 120000, 13);
+
 -- --------------------------------------------------------
 
 --
@@ -309,6 +325,14 @@ CREATE TABLE `order_item` (
   `orders_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- A tábla adatainak kiíratása `order_item`
+--
+
+INSERT INTO `order_item` (`id`, `quantity`, `orders_id`, `product_id`) VALUES
+(1, 1, 1, 1),
+(2, 2, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -398,16 +422,16 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `desc`, `category_id`, `discount_id`, `price`, `created_at`, `modified_at`, `deleted_at`, `image_url`, `model_id`) VALUES
-(1, 'Alcantara üléshuzat', 'Prémium Alcantara ülésvédő huzat.', 1, 1, 60000, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'alcantara.jpg', NULL),
-(2, 'Egyszerű csomagtér választó háló', 'Minden járműhöz lehet használni.', 1, 2, 1990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'csomagter-halo.jpg', NULL),
-(3, 'Multimédiás fejegység', 'Érintőkijelzős fejegység Bluetooth-tal, Android Auto-val és Apple CarPlay-yel.', 2, 3, 45990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'multimedias-fejegyseg.jpg', NULL),
-(4, 'Sport váltógomb (5 Fokozatú)', 'Bármilyen autóba illik aminek 5 fokozatú váltóje van.', 5, 4, 3990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'sport-valtogomb.jpg', NULL),
-(5, 'Areon cseresznye légfrissítő', 'Cseresznye illatú Areon legfrissítő', 3, 1, 1500, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'areon-legfrissito.jpg', NULL),
+(1, 'Alcantara üléshuzat', 'Prémium Alcantara ülésvédő huzat.', 2, 1, 60000, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'alcantara.jpg', NULL),
+(2, 'Egyszerű csomagtér választó háló', 'Minden járműhöz lehet használni.', 11, 2, 1990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'csomagter-halo.jpg', NULL),
+(3, 'Multimédiás fejegység', 'Érintőkijelzős fejegység Bluetooth-tal, Android Auto-val és Apple CarPlay-yel.', 9, 3, 45990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'multimedias-fejegyseg.jpg', NULL),
+(4, 'Sport váltógomb (5 Fokozatú)', 'Bármilyen autóba illik aminek 5 fokozatú váltóje van.', 8, 4, 3990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'sport-valtogomb.jpg', NULL),
+(5, 'Areon cseresznye légfrissítő', 'Cseresznye illatú Areon legfrissítő', 10, 1, 1500, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'areon-legfrissito.jpg', NULL),
 (6, 'Alumínium pedálszett', 'Ez a szett tartalmaz egy gázpedált egy fékpedált és egy kuplung pedál is.', 4, 5, 12990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'aluminum-pedalszett.jpg', NULL),
-(7, 'Világos műszerfal borítás', 'Ez egy műszerfal borítás amit személyre szabható és könnyen tisztítható', 6, 2, 8990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'muszerfal-boritas.jpg', NULL),
-(8, 'Audi A6 C7 Első ajtó kárpit szett', 'Ez egy kárpit szett ami csak is kizárólag Audi A6 C7 autó belsejére jó', 7, 0, 29990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'audi-a6-karpit.jpg', NULL),
-(9, 'Fém rácsos csomagtér választó', 'Csomagtér választó ami megvédi a csomagok előtt ülő utasok biztonságát. Ez a csomagtér választó kizárólag csak kombiban jó.', 8, 1, 6990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'fem-racsos-csomagter.jpg', NULL),
-(10, 'Multifunkcionális kormány borítás', 'Ez minden kormányhoz jó', 10, 0, 1900, '2026-01-08 13:04:51', '2026-01-12 10:39:51', '2026-01-08 13:04:51', 'kormany-boritas.jpg', NULL);
+(7, 'Világos műszerfal borítás', 'Ez egy műszerfal borítás amit személyre szabható és könnyen tisztítható', 5, 2, 8990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'muszerfal-boritas.jpg', NULL),
+(8, 'Audi A6 C7 Első ajtó kárpit szett', 'Ez egy kárpit szett ami csak is kizárólag Audi A6 C7 autó belsejére jó', 3, 0, 29990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'audi-a6-karpit.jpg', NULL),
+(9, 'Fém rácsos csomagtér választó', 'Csomagtér választó ami megvédi a csomagok előtt ülő utasok biztonságát. Ez a csomagtér választó kizárólag csak kombiban jó.', 11, 1, 6990, '2026-01-08 13:04:51', '2026-01-08 13:04:51', '2026-01-08 13:04:51', 'fem-racsos-csomagter.jpg', NULL),
+(10, 'Multifunkcionális kormány borítás', 'Ez minden kormányhoz jó', 1, 0, 1900, '2026-01-08 13:04:51', '2026-01-12 10:39:51', '2026-01-08 13:04:51', 'kormany-boritas.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -540,7 +564,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT a táblához `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT a táblához `discount`
@@ -564,13 +588,13 @@ ALTER TABLE `order`
 -- AUTO_INCREMENT a táblához `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT a táblához `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT a táblához `order_items`
