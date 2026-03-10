@@ -25,6 +25,11 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Column(name = "model_id")
+    private Integer modelId;
+
+    public Integer getModelId() { return modelId; }
+    public void setModelId(Integer modelId) { this.modelId = modelId; }
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public Integer getId() { return id; }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -19,6 +18,16 @@ public class ProductController {
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    @GetMapping("/products/filter")
+    public List<Product> filterProducts(
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) Integer modelId,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice
+    ) {
+        return productRepository.filterProducts(categoryId, modelId, minPrice, maxPrice);
     }
 
     @GetMapping("/products/{id}")
