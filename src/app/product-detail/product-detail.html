@@ -1,0 +1,24 @@
+<app-nav-bar/>
+
+<div class="page">
+  <div class="image-section">
+    <img [src]="images[currentImageIndex]" [alt]="product.name">
+    <div class="dots">
+      <span *ngFor="let img of images; let i = index" 
+            class="dot" 
+            [class.active]="i === currentImageIndex"
+            (click)="currentImageIndex = i">
+      </span>
+    </div>
+  </div>
+
+  <div class="details">
+    <p><strong>ár:</strong> {{ product.price }} Ft</p>
+    <p><strong>részletes leírás:</strong> {{ product.description }}</p>
+  </div>
+
+  <div class="actions">
+    <button class="btn orange" (click)="addToFavorites()">Kedvencekhez adás</button>
+    <button class="btn orange" (click)="addToCart()">Kosárba</button>
+  </div>
+</div>
