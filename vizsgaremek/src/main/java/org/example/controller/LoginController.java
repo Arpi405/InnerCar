@@ -46,4 +46,22 @@ public class LoginController {
         }
         return repo.save(customer);
     }
+
+    @PutMapping("/api/customer/update")
+    public ResponseEntity<?> updateCustomer(@RequestBody Customer updatedCustomer) {
+        Customer existing = repo.findByEmail(updatedCustomer.getEmail());
+        if (existing == null) {
+            return ResponseEntity.status(404).body("Felhasználó nem található!");
+        }
+
+        if (updatedCustomer.getName() != null) existing.setName(updatedCustomer.getName());
+        if (updatedCustomer.getPhone() != null) existing.setPhone(updatedCustomer.getPhone());
+        if (updatedCustomer.getAddress() != null) existing.setAddress(updatedCustomer.getAddress());
+        if (updatedCustomer.getPassword() != null && !updatedCustomer.getPassword().isEmpty()) {
+            existing.setPassword(updatedCustomer.getPassword());
+        }
+
+        repo.save(existing);
+        return ResponseEntity.ok("Adatok sikeresen frissítve!");
+    }
 }
