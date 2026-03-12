@@ -43,18 +43,26 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./reset-password/reset-password').then(m => m.ResetPassword),
   },
-
   {
-  path: 'profile',
-  loadComponent: () =>
-    import('./profile/profile').then(m => m.Profile),
+    path: 'profile',
+    loadComponent: () =>
+      import('./profile/profile').then(m => m.Profile),
   },
-
   {
-  path: 'product/:id',
-  loadComponent: () =>
-    import('./product-detail/product-detail').then(m => m.ProductDetail),
-},
+    path: 'favorites',
+    loadComponent: () =>
+      import('./favorites/favorites').then(m => m.Favorites),
+  },
+  {
+    path: 'settings',
+    loadComponent: () =>
+      import('./settings/settings').then(m => m.Settings),
+  },
+  {
+    path: 'product/:id',
+    loadComponent: () =>
+      import('./product-detail/product-detail').then(m => m.ProductDetail),
+  },
 
   { path: '**', redirectTo: 'home' },
 ];

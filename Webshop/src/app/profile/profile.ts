@@ -8,20 +8,14 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, NavBar, RouterModule],
   templateUrl: './profile.html',
-  styleUrl: './profile.css',
+  styleUrl: './profile.css'
 })
 export class Profile implements OnInit {
-  favorites: any[] = [];
+  name = '';
+  email = '';
 
   ngOnInit() {
-    const saved = localStorage.getItem('favorites');
-    if (saved) {
-      this.favorites = JSON.parse(saved);
-    }
-  }
-
-  removeFromFavorites(item: any) {
-    this.favorites = this.favorites.filter(f => f.id !== item.id);
-    localStorage.setItem('favorites', JSON.stringify(this.favorites));
+    this.name = localStorage.getItem('name') || 'Ismeretlen';
+    this.email = localStorage.getItem('email') || '';
   }
 }

@@ -1,0 +1,46 @@
+<app-nav-bar/>
+
+<div class="page">
+  <div class="settings-container">
+    <h2>Beállítások</h2>
+
+    <div class="success" *ngIf="successMessage">{{ successMessage }}</div>
+    <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <div class="form-group">
+      <label>Név</label>
+      <input type="text" [(ngModel)]="name" placeholder="Teljes név">
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" [value]="email" disabled>
+    </div>
+
+    <div class="form-group">
+      <label>Telefonszám</label>
+      <input type="text" [(ngModel)]="phone" placeholder="Telefonszám">
+    </div>
+
+    <div class="form-group">
+      <label>Cím</label>
+      <input type="text" [(ngModel)]="address" placeholder="Lakcím">
+    </div>
+
+    <hr>
+
+    <h3>Jelszó módosítása</h3>
+
+    <div class="form-group">
+      <label>Új jelszó</label>
+      <input type="password" [(ngModel)]="newPassword" placeholder="Új jelszó">
+    </div>
+
+    <div class="form-group">
+      <label>Jelszó megerősítése</label>
+      <input type="password" [(ngModel)]="confirmPassword" placeholder="Jelszó megerősítése">
+    </div>
+
+    <button class="save-btn" (click)="save()">Mentés</button>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+.page {
+  background: #1a2035;
+  min-height: 100vh;
+  padding: 30px;
+  font-family: 'Inria Sans', sans-serif;
+}
+
+.settings-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #b6c0cc;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+h2 {
+  color: #1a2035;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #1a2035;
+  margin: 20px 0 10px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #1a2035;
+  margin: 20px 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #1a2035;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #e5ecf3;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.form-group input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.save-btn {
+  background: #ff8a00;
+  color: #000;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.save-btn:hover {
+  background: #e07a00;
+}
+
+.success {
+  background: #4caf50;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.error {
+  background: #e53935;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NavBar } from "../nav-bar/nav-bar";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CartService } from '../services/cart-service';
 
@@ -24,7 +24,8 @@ export class ProductDetail implements OnInit {
   currentImageIndex: number = 0;
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
+    private router: Router,
     private http: HttpClient,
     private cartService: CartService,
     private cdr: ChangeDetectorRef
@@ -60,14 +61,22 @@ export class ProductDetail implements OnInit {
   }
 
   addToFavorites() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      alert('A kedvencekhez való hozzáadáshoz be kell jelentkezned!');
+      this.router.navigate(['/login']);
+      return;
+    }
+
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     const already = favorites.find((f: any) => f.id === this.product.id);
-    
+
     if (already) {
       alert('Ez a termék már a kedvenceid között van!');
       return;
     }
-    
+
     favorites.push(this.product);
     localStorage.setItem('favorites', JSON.stringify(favorites));
     alert('Kedvencekhez adva!');
